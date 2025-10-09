@@ -35,35 +35,50 @@ export default function TemplateModern({ data }) {
         {/* header */}
         <div className="modern-header">
           <div className="header-top">
-            <div className="contact-left">
-              <div className="contact-item small">
-                <i className="bi bi-telephone-fill" />
-                <span>{p.whatsapp || ""}</span>
-              </div>
+            <div className="mt-4">
+              <h1 className="full-name">{p.fullName}</h1>
+              <div className="title">{p.title}</div>
             </div>
 
-            <div className="header-center">
-              <div className="name-wrap">
-                <h1 className="full-name">{p.fullName}</h1>
-                <div className="title">{p.title}</div>
-              </div>
-            </div>
-
-            <div className="contact-right">
-              <div className="contact-item small">
-                <i className="bi bi-envelope-fill" />
-                <span>{p.email || ""}</span>
-              </div>
-              <div className="contact-item small">
-                <i className="bi bi-linkedin" />
+            <div className="contact">
+              {p.email && (
                 <a
-                  href={p.linkedin || "#"}
+                  className="contact-link"
+                  href={`mailto:${p.email}`}
                   target="_blank"
                   rel="noopener noreferrer"
+                  title={p.email}
+                  aria-label="Email"
                 >
-                  LinkedIn
+                  <i className="bi bi-envelope-fill" />
                 </a>
-              </div>
+              )}
+
+              {p.linkedin && (
+                <a
+                  className="contact-link"
+                  href={p.linkedin}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  title="LinkedIn"
+                  aria-label="LinkedIn"
+                >
+                  <i className="bi bi-linkedin" />
+                </a>
+              )}
+
+              {p.whatsapp && (
+                <a
+                  className="contact-link"
+                  href={p.whatsapp}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  title="WhatsApp"
+                  aria-label="WhatsApp"
+                >
+                  <i className="bi bi-telephone-fill" />
+                </a>
+              )}
             </div>
           </div>
 
@@ -100,23 +115,25 @@ export default function TemplateModern({ data }) {
                     return (
                       <div key={i} className="skill-row">
                         <div className="skill-meta">
-                          <span className="skill-name">{s.name}</span>
-                          <span className="skill-percent">{lvl}%</span>
+                          <span className="skill-name text-muted">
+                            {s.name}
+                          </span>
+                          <div className="dots text-muted">
+                            {lvl}%{renderDots(lvl, 10)}
+                          </div>
                         </div>
-                        <div className="dots">{renderDots(lvl, 10)}</div>
                       </div>
                     );
                   })}
+                  <h3>Personal Skills</h3>
+                  <ul className="simple-list">
+                    {personalSkills.map((ps, i) => (
+                      <li className="text-muted" key={i}>
+                        {ps}
+                      </li>
+                    ))}
+                  </ul>
                 </div>
-              </div>
-
-              <div className="card-block" style={{ marginTop: 12 }}>
-                <h3>Personal Skills</h3>
-                <ul className="simple-list">
-                  {personalSkills.map((ps, i) => (
-                    <li key={i}>{ps}</li>
-                  ))}
-                </ul>
               </div>
             </div>
 
@@ -125,9 +142,31 @@ export default function TemplateModern({ data }) {
                 <h3>Certificates</h3>
                 <ul className="cert-list">
                   {certs.map((c, i) => (
-                    <li key={i} className="cert-item">
-                      <strong>{c.title}</strong>
-                      <div className="muted small">{c.issuer}</div>
+                    <li
+                      key={i}
+                      className="cert-item"
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "space-between",
+                        gap: 12,
+                      }}
+                    >
+                      <div>
+                        <strong>{c.title}</strong>
+                        <div className="muted small">{c.issuer}</div>
+                      </div>
+                      {c.url && (
+                        <a
+                          href={c.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="social-icon"
+                          title="Open certificate"
+                        >
+                          <i className="bi bi-link-45deg" />
+                        </a>
+                      )}
                     </li>
                   ))}
                 </ul>

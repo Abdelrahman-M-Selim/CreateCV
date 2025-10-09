@@ -4,10 +4,9 @@ export default function TemplateClassic({ data }) {
   const p = data.personal || {};
   const prof = data.profSkills || [];
 
-  // mounted -> triggers animation
   const [mounted, setMounted] = useState(false);
   useEffect(() => {
-    const t = setTimeout(() => setMounted(true), 60); // tiny delay for nicer animation
+    const t = setTimeout(() => setMounted(true), 60); 
     return () => clearTimeout(t);
   }, []);
 
@@ -132,7 +131,6 @@ export default function TemplateClassic({ data }) {
         </section>
       </div>
 
-      {/* right-col unchanged (contacts, header, summary, projects...) */}
       <div className="right-col">
         <div className="header ">
           <div className="header-inner">
@@ -205,33 +203,64 @@ export default function TemplateClassic({ data }) {
         <section className="section timeline">
           <h3>Projects</h3>
           {(data.projects || []).map((pr, i) => (
-            <div className="item intro" key={i}>
-              <strong>{pr.title}</strong>
+            <div
+              className="item intro"
+              key={i}
+              style={{ display: "flex", alignItems: "flex-start", gap: 12 }}
+            >
+              <div style={{ flex: 1 }}>
+                <strong>{pr.title}</strong>
+                <p className="muted" style={{ marginTop: 4 }}>
+                  {pr.desc}
+                </p>
+              </div>
               {pr.repo && (
-                <div>
-                  <a href={pr.repo} target="_blank" rel="noreferrer">
-                    <i className="bi bi-github" />
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    gap: 6,
+                  }}
+                >
+                  <a
+                    href={pr.repo}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    title="Open repo"
+                  >
+                    <i className="bi bi-github" style={{ fontSize: 20 }} />
                   </a>
                 </div>
-              )}
-              <p className="muted">{pr.desc}</p>
-              {pr.imageBase64 && (
-                <img
-                  src={pr.imageBase64}
-                  alt={pr.title}
-                  style={{ maxWidth: 120, marginTop: 8 }}
-                />
               )}
             </div>
           ))}
         </section>
 
-        <section className="section timeline">
+        <section className="section">
           <h3>Certificates</h3>
-          {(data.certificates || []).map((c, i) => (
-            <div className="item" key={i}>
-              <strong>{c.title}</strong>
-              <p className="muted">{c.issuer}</p>
+          {(data.certificates || []).map((c, idx) => (
+            <div
+              className="item"
+              key={idx}
+              style={{ display: "flex", alignItems: "center", gap: 10 }}
+            >
+              <div style={{ flex: 1 }}>
+                <strong>{c.title}</strong>
+                <p className="muted" style={{ margin: 0 }}>
+                  {c.issuer}
+                </p>
+              </div>
+              {c.url && (
+                <a
+                  href={c.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  title="Open certificate"
+                >
+                  <i className="bi bi-link-45deg" style={{ fontSize: 18 }} />
+                </a>
+              )}
             </div>
           ))}
         </section>
