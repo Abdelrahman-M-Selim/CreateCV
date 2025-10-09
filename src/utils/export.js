@@ -91,7 +91,10 @@ export async function downloadPdfFromNode(node, fileName = "cv.pdf") {
     const canvas = await html2canvas(node, {
       scale,
       useCORS: true,
-      allowTaint: false,
+      allowTaint: true, 
+      logging: false,
+      windowWidth: document.body.scrollWidth,
+      windowHeight: document.body.scrollHeight,
     });
     const imgData = canvas.toDataURL("image/png");
 

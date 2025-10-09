@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "./TemplateModern.css";
+import "../../styles/TemplatesCSS/TemplateModern.css";
 
 export default function TemplateModern({ data }) {
   const p = data.personal || {};
@@ -118,8 +118,28 @@ export default function TemplateModern({ data }) {
                           <span className="skill-name text-muted">
                             {s.name}
                           </span>
-                          <div className="dots text-muted">
-                            {lvl}%{renderDots(lvl, 10)}
+
+                          <div
+                            style={{
+                              display: "flex",
+                              alignItems: "center",
+                              gap: 10,
+                            }}
+                          >
+                            <span
+                              className="skill-percent"
+                              aria-hidden
+                              style={{
+                                minWidth: 40,
+                                textAlign: "right",
+                                fontSize: 13,
+                              }}
+                            >
+                              {lvl}%
+                            </span>
+                            <div className="dots" aria-hidden>
+                              {renderDots(lvl, 10)}
+                            </div>
                           </div>
                         </div>
                       </div>

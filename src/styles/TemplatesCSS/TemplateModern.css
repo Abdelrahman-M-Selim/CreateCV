@@ -1,0 +1,221 @@
+
+:root{
+  --bg-page: #f1f3f6;
+  --card-bg: #ffffff;
+  --card-radius: 10px;
+  --header-bg: #111217; /* stronger contrast */
+  --muted: #6b7280;
+  --accent-start: #4caf50;
+  --accent-end: #50af32;
+  --soft: #fafafa;
+  --text: #111827;
+  --shadow-1: 0 12px 30px rgba(16,24,40,0.06);
+  --shadow-2: 0 6px 12px rgba(16,24,40,0.04);
+  --gap: 16px;
+  --card-padding: 14px;
+  --photo-size: 140px;
+}
+
+/* page wrapper */
+.modern-resume{
+  padding:28px;
+  background:var(--bg-page);
+  width:100%;
+  box-sizing:border-box;
+  display:flex;
+  justify-content:center;
+}
+
+/* main card */
+.modern-card{
+  width:920px;
+  background:var(--card-bg);
+  border-radius:var(--card-radius);
+  overflow:visible;
+  box-shadow:var(--shadow-1);
+  position:relative;
+  box-sizing:border-box;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+  color:var(--text);
+}
+
+/* header dark band */
+.modern-header{
+  height:200px;
+  background:var(--header-bg);
+  color:#fff;
+  overflow:visible;
+  padding:36px 28px 56px 28px;
+  position:relative;
+  border-top-left-radius:var(--card-radius);
+  border-top-right-radius:var(--card-radius);
+}
+
+/* header layout */
+.header-top{
+  height:90%;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+}
+
+/* contact icons */
+.contact{
+  display:flex;
+  gap:8px;
+  align-items:center;
+}
+
+.contact-link{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  width:40px;
+  height:40px;
+  border-radius:8px;
+  background:rgba(255,255,255,0.06);
+  color:inherit;
+  text-decoration:none;
+  transition:transform .12s ease, box-shadow .12s ease, background .12s ease;
+}
+.contact-link i{ font-size:18px; line-height:1; }
+.contact-link:hover,.contact-link:focus{
+  transform:translateY(-3px);
+  box-shadow:0 10px 24px rgba(16,24,40,0.12);
+  background:rgba(255,255,255,0.12);
+  outline: none;
+}
+
+/* circular photo overlapping header (center) */
+.photo-circle{
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  border: 4px solid rgba(255,255,255,0.95); 
+  box-shadow: 0 8px 20px rgba(16,24,40,0.08);
+  position:absolute;
+  left:42%;
+  bottom: -70px; 
+  z-index: 5;
+  overflow: hidden;
+  background: linear-gradient(180deg, #fff, #f8fafc);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.photo-circle img{ width:100%; height:100%; object-fit:cover; display:block; }
+
+/* main body — stacked rows (but rows themselves are flex rows) */
+.modern-body{
+  display:flex;
+  flex-direction:column;
+  gap:18px;
+  padding:calc(var(--photo-size)/2 + 24px) 28px 28px; /* leave room for photo */
+  box-sizing:border-box;
+}
+
+/* common card style */
+.card-block{
+  background:var(--soft);
+  border-radius:8px;
+  padding:var(--card-padding);
+  box-shadow:var(--shadow-2);
+}
+.card-block h3{ margin:0 0 8px 0; font-size:14px; color:var(--text); }
+.muted{ color:var(--muted); font-size:13px; line-height:1.5; }
+
+/* Row helper */
+.row{ display:flex; gap:var(--gap); width:100%; box-sizing:border-box; flex-wrap:nowrap; align-items:flex-start; }
+
+/* PROFILE full width */
+.row-profile .full{ width:100%; }
+
+/* SKILLS + CERTIFICATES */
+.row-skill-cert{ align-items:flex-start; }
+.col-left{ flex:0 0 62%; display:flex; flex-direction:column; gap:12px; min-width:0; }
+.col-right{ flex:0 0 38%; min-width:0; }
+
+/* skills (dots) */
+.skill-list .skill-row{ margin-bottom:10px; }
+.skill-meta{ display:flex; justify-content:space-between; align-items:center; font-size:13px; color:var(--text); margin-bottom:6px; gap:12px; }
+.skill-name{ white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:55%; }
+.dots{ display:flex; gap:6px; align-items:center; justify-content:flex-end; }
+.dot{ width:10px; height:10px; border-radius:50%; background: rgba(0,0,0,0.08); display:inline-block; transition: background .45s, transform .45s; transform: scale(1); }
+.dot-filled{ background: linear-gradient(90deg,var(--accent-start),var(--accent-end)); transform: scale(1.06); box-shadow: 0 4px 8px rgba(76,175,80,0.12); }
+
+/* personal skills list */
+.simple-list{ margin:0; padding-inline-start:16px; }
+.simple-list li{ margin-bottom:6px; font-size:13px; }
+
+/* certificates */
+.cert-list{ margin:0; padding:0; list-style:none; }
+.cert-item{ margin-bottom:10px; display:flex; align-items:center; justify-content:space-between; gap:12px; }
+
+/* EXPERIENCE + EDUCATION equal columns */
+.row-exp-edu{ align-items:flex-start; }
+.col-equal{ flex:1; min-width:0; }
+
+/* entries */
+.entry{ margin-bottom:10px; }
+.entry-head{ display:flex; justify-content:space-between; align-items:center; margin-bottom:6px; }
+
+/* PROJECTS + LANGUAGES row */
+.row-projects-langs{ align-items:flex-start; }
+.projects-col{ flex:1 1 auto; min-width:0; }
+.langs-col{ flex:0 0 320px; min-width:200px; }
+
+/* projects row internal */
+.projects-row{ display:flex; gap:12px; flex-wrap:wrap; }
+.project-card{ background:var(--card-bg); border:1px solid #f0f0f0; padding:10px; border-radius:8px; width: calc(50% - 6px); box-sizing:border-box; margin-bottom:8px; }
+.repo-link{ display:inline-flex; margin-top:6px; text-decoration:none; color:inherit; }
+
+/* languages visuals */
+.lang-list{ display:flex; flex-direction:column; gap:8px; }
+.lang-item{ display:flex; gap:10px; align-items:center; }
+.lang-name{ width:100px; font-size:13px; color:var(--text); text-align:right; }
+.lang-bar{ flex:1; height:8px; background:#eee; border-radius:999px; overflow:hidden; }
+.lang-fill{ height:100%; background: linear-gradient(90deg,var(--accent-start),var(--accent-end)); transform-origin:left; transform:scaleX(0); transition: transform .9s cubic-bezier(.2,.9,.2,1); }
+
+/* small polish */
+.full-name{ margin:0; font-size:28px; letter-spacing:.6px; text-align:right; }
+.title{ margin-top:6px; font-size:15px; opacity:0.94; }
+.skill-percent { color: var(--muted); font-size: 13px; }
+
+/* responsive: stack rows vertically and make columns full width */
+@media (max-width:900px){
+  .modern-card{ width:100%; }
+  /* move photo to the right for RTL small screens */
+  .photo-circle{ left:auto; right:24px; transform:none; bottom:-60px; }
+  .row{ flex-direction:column; gap:12px; }
+  .col-left,.col-right,.col-equal,.projects-col,.langs-col{ flex:none; width:100%; }
+  .projects-row{ display:block; }
+  .project-card{ width:100%; margin-bottom:10px; }
+}
+
+/* make dots slightly larger on small devices for touch */
+@media (max-width:480px){
+  .dot{ width:12px; height:12px; }
+  .contact-link{ width:44px; height:44px; }
+}
+
+/* keyboard focus for accessibility */
+.contact-link:focus{ box-shadow:0 0 0 3px rgba(79, 201, 75, 0.18); }
+
+/* print-friendly rules */
+@media print{
+  .modern-resume{ padding:0; background:transparent; }
+  .modern-card{ width:100%; box-shadow:none; border-radius:0; }
+  .photo-circle{ display:none; }
+  .contact-link{ display:inline-block; }
+  .card-block{ background:transparent; box-shadow:none; border: none; padding:0; }
+}
+
+/* helper class you can toggle from JS (optional) to animate fills after mount) */
+.modern-card.mounted .lang-fill{ transition: transform .9s cubic-bezier(.2,.9,.2,1); }
+
+/* small tweak: prevent overflow on very small screens */
+@media (max-width:360px){
+  .header-top{ gap:8px; }
+  .full-name{ font-size:22px; }
+}
