@@ -75,7 +75,7 @@ html,body,#root{height:100%;margin:0;font-family: Arial, Helvetica, sans-serif;b
 
 /* right column */
 .right-col{flex:1;background:var(--card-bg);display:flex;flex-direction:column}
-.header{background:var(--accent);padding:28px;color:#fff;border-bottom-left-radius:30px}
+.header{background:var(--accent);padding:35px;color:#fff;border-bottom-left-radius:30px ; height: 150px;}
 .header-inner{display:flex;align-items:center;justify-content:space-between}
 .big-name{margin:0;font-size:28px;font-weight:700}
 .sub{margin:0;font-size:13px;color:rgba(255,255,255,0.95)}
@@ -88,3 +88,138 @@ html,body,#root{height:100%;margin:0;font-family: Arial, Helvetica, sans-serif;b
 .templates-bar{display:flex;gap:10px;align-items:center;padding:8px 0;overflow-x:auto}
 .template-thumb{min-width:140px;border-radius:10px;padding:8px;background:#fff;box-shadow:0 6px 18px rgba(0,0,0,0.06);cursor:pointer;display:flex;flex-direction:column;gap:8px;align-items:center;text-align:center}
 .template-thumb.active{outline:3px solid var(--accent);transform:translateY(-4px)}
+
+/* ------- Centered editor / preview layout ------- */
+
+/* base app layout stays flex, but modifiers below switch behavior */
+.app { display: flex; gap: 20px; justify-content: center; align-items: flex-start; padding: 28px; box-sizing: border-box; }
+
+/* ===== centered editor (initial) ===== */
+.app.centered-editor {
+  align-items: center;
+  min-height: calc(100vh - 56px);
+  padding: 28px 16px;
+}
+
+/* editor centered and larger */
+.app.centered-editor .editor {
+  position: relative;
+  display: block;
+  width: min(720px, 90%);   /* ~half/center on desktop, full-ish on small screens */
+  max-height: calc(100vh - 120px);
+  overflow:auto;
+  margin: 0 auto;
+  box-shadow: 0 18px 40px rgba(16,24,40,0.08);
+  border-radius: 12px;
+  padding: 20px;
+}
+
+/* hide the preview panel while in centered-editor */
+.app.centered-editor .preview-wrap { display: none; }
+
+/* small helper for placeholder text */
+.preview-wrap.placeholder { display: none; }
+
+/* ===== preview mode (show CV centered) ===== */
+.app.preview-mode {
+  align-items: flex-start;
+  min-height: 100vh;
+  padding: 28px;
+}
+
+/* hide editor when preview is active (but keep it in DOM) */
+.app.preview-mode .editor { display: none; }
+
+/* preview card centered and constrained width */
+.app.preview-mode .preview-wrap {
+  display: block;
+  width: min(900px, 95%);
+  margin: 20px auto;
+  box-sizing: border-box;
+}
+
+/* ensure resume card itself is responsive inside preview-wrap */
+.app.preview-mode .preview-wrap .resume-card,
+.app.preview-mode .preview-wrap .resume-card-inner {
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+/* small screens */
+@media (max-width: 880px) {
+  .app { flex-direction: column; padding: 12px; }
+  .app.centered-editor .editor { width: 100%; max-height: none; }
+  .app.preview-mode .preview-wrap { width: 100%; padding: 8px; }
+}
+
+/* tidy some editor internals so they look nicer when centered */
+.app .editor header { text-align: center; }
+.app .editor header h2 { margin-bottom: 6px; font-size: 20px; }
+.app .editor .form-group { margin-bottom: 12px; }
+
+/* make buttons more visible when centered */
+.app .editor .btn-primary { padding: 10px 16px; font-weight: 600; }
+
+/* Preview toolbar center align */
+.app.preview-mode .preview-toolbar { justify-content: center; gap: 12px; flex-wrap:wrap; margin-bottom: 18px; }
+
+/* small tweak: center the preview toolbar buttons */
+.app.preview-mode .preview-toolbar .preview-actions { justify-content: center; }
+
+/* placeholder note style if you keep the placeholder */
+.placeholder-note { color:#666; text-align:center; padding:40px; }
+
+/* Skills editor visuals */
+.prof-skill-row { border-radius: 8px; padding: 8px; background: rgba(0,0,0,0.02); }
+.prof-skill-controls .skill-range { -webkit-appearance: none; appearance: none; height: 6px; background: transparent; flex: 1; }
+.prof-skill-controls .skill-range:focus { outline: none; }
+
+/* editor fill (animated) */
+.skill-fill-editor {
+  background: linear-gradient(90deg, #4caf50, #50af32);
+  transform-origin: left;
+  transform: scaleX(0);
+  transition: transform .6s cubic-bezier(.2,.9,.2,1);
+}
+
+/* preview fill (animated) */
+.skill .skill-fill {
+  background: linear-gradient(90deg, #4caf50, #50af32);
+  transform-origin: left;
+  transform: scaleX(0);
+  transition: transform .9s cubic-bezier(.2,.9,.2,1);
+}
+
+/* contacts icons */
+.contacts { display:flex; gap:10px; align-items:center; }
+.contact-icon { display:inline-flex; align-items:center; justify-content:center; width:40px; height:40px; border-radius:8px; background: rgba(255,255,255,0.06); color: #fff; text-decoration:none; }
+.contact-icon i { font-size:18px; }
+
+/* project repo icon spacing */
+.item.intro a { color: inherit; display:inline-flex; align-items:center; justify-content:center; width:28px; height:28px; border-radius:6px; background: rgba(0,0,0,0.04); text-decoration:none; }
+
+/* skill preview fill (fallback) */
+.skill .skill-fill {
+  background: linear-gradient(90deg, #4caf50, #50af32);
+  transform-origin: left;
+  transform: scaleX(0);
+  transition: transform .9s cubic-bezier(.2,.9,.2,1);
+}
+
+/* editor slider + bar visuals */
+.skill-range { width: 100%; -webkit-appearance: none; appearance:none; height:6px; background: transparent; }
+.skill-range::-webkit-slider-thumb { -webkit-appearance: none; width:14px; height:14px; border-radius:50%; background:#4caf50; box-shadow:0 1px 4px rgba(0,0,0,0.2); }
+
+/* small editor fill for inline preview inside editor */
+.skill-fill-editor { background: linear-gradient(90deg, #4caf50, #50af32); height:100%; transform-origin:left; transition:transform .6s cubic-bezier(.2,.9,.2,1); }
+
+/* contact icons */
+.contact-icon { display:inline-flex; align-items:center; justify-content:center; width:40px; height:40px; border-radius:8px; background: rgba(255,255,255,0.06); color: #fff; text-decoration:none; margin-left:8px; }
+.contact-icon i { font-size:18px; }
+
+/* reuse skill styles for languages */
+.lang-row { border-radius: 8px; padding: 8px; background: rgba(0,0,0,0.02); }
+.skill-fill { background: linear-gradient(90deg, #4caf50, #50af32); transform-origin: left; transform: scaleX(0); transition: transform .9s cubic-bezier(.2,.9,.2,1); }
+.skill-range { -webkit-appearance: none; appearance: none; height: 6px; background: transparent; }
+.skill-range::-webkit-slider-thumb { -webkit-appearance: none; width: 14px; height: 14px; border-radius: 50%; background: #4caf50; box-shadow: 0 1px 4px rgba(0,0,0,0.2); }

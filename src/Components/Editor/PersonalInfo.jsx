@@ -9,32 +9,58 @@ export default function PersonalInfo({ personal, onChange }) {
     <div>
       <div className="form-group">
         <label>Full name</label>
-        <input className="form-control" value={personal.fullName} onChange={e => update("fullName", e.target.value)} />
+        <input
+          className="form-control"
+          value={personal.fullName}
+          onChange={(e) => update("fullName", e.target.value)}
+          autoFocus
+        />
       </div>
 
       <div className="form-group">
-        <label>Title</label>
-        <input className="form-control" value={personal.title} onChange={e => update("title", e.target.value)} />
+        <label>Jop Title</label>
+        <input
+          className="form-control"
+          value={personal.title}
+          onChange={(e) => update("title", e.target.value)}
+        />
       </div>
 
       <div className="form-group">
-        <label>Summary</label>
-        <textarea className="form-control" rows="3" value={personal.summary} onChange={e => update("summary", e.target.value)} />
+        <label>Introduction</label>
+        <textarea
+          className="form-control"
+          rows="3"
+          value={personal.summary}
+          onChange={(e) => update("summary", e.target.value)}
+        />
       </div>
 
       <div className="form-group">
         <label>Email</label>
-        <input className="form-control" value={personal.email} onChange={e => update("email", e.target.value)} />
+        <input
+          className="form-control"
+          value={personal.email}
+          onChange={(e) => update("email", e.target.value)}
+        />
       </div>
 
       <div className="form-group">
         <label>LinkedIn (url)</label>
-        <input className="form-control" value={personal.linkedin} onChange={e => update("linkedin", e.target.value)} />
+        <input
+          className="form-control"
+          value={personal.linkedin}
+          onChange={(e) => update("linkedin", e.target.value)}
+        />
       </div>
 
       <div className="form-group">
         <label>WhatsApp (url)</label>
-        <input className="form-control" value={personal.whatsapp} onChange={e => update("whatsapp", e.target.value)} />
+        <input
+          className="form-control"
+          value={personal.whatsapp}
+          onChange={(e) => update("whatsapp", e.target.value)}
+        />
       </div>
     </div>
   );

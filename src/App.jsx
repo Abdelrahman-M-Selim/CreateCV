@@ -18,10 +18,14 @@ export default function App() {
     // ensure selected template saved to data
     setData({ ...data, settings: { ...data.settings, selectedTemplate } });
     setPreview(true);
+    // scroll to top so preview is centered in view
+    window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
   function backToEdit() {
     setPreview(false);
+    // scroll to top so editor is centered
+    window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
   function exportJson() {
@@ -51,7 +55,8 @@ export default function App() {
   }
 
   return (
-    <div className="app">
+    // add a modifier class for layout control
+    <div className={`app ${isPreview ? "preview-mode" : "centered-editor"}`}>
       <Editor
         data={data}
         onChange={handleChange}
@@ -68,8 +73,9 @@ export default function App() {
           onBack={backToEdit}
         />
       ) : (
-        <div className="preview-wrap" style={{ display: "flex", alignItems: "center", justifyContent: "center", minHeight: 400 }}>
-          <div style={{ color:"#666" }}>Preview hidden. Click "Show preview" in the editor.</div>
+        // when editor is active, we still render a placeholder preview area for layout harmony (but hidden)
+        <div className="preview-wrap placeholder">
+          <div className="placeholder-note">Preview hidden. Complete the form and click "Show preview".</div>
         </div>
       )}
     </div>
