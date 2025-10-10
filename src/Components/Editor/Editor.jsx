@@ -69,7 +69,7 @@ export default function Editor({
         }}
       >
         <h2 style={{ margin: 0, fontSize: "1.5em", color: "var(--text)" }}>
-          📝 CV Editor
+           CV Creator
         </h2>
         <p
           style={{

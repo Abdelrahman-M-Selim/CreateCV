@@ -8,25 +8,63 @@ export default function TemplateMinimal({ data }) {
   const jobs = data.jobs || [];
   const edus = data.educations || [];
   const projects = data.projects || [];
+  const personalSkills = data.personalSkills || []; // Added for clarity
+
+  // Consolidated list for Coursework/Skills
+  const consolidatedSkills = [
+    ...(data.relevantCoursework || []),
+    ...personalSkills, // Adding soft skills here
+    ...prof.map((s) => s.name),
+  ]
+    .filter(Boolean)
+    .reduce((acc, current) => {
+      // Deduplicate entries
+      if (!acc.includes(current)) {
+        acc.push(current);
+      }
+      return acc;
+    }, [])
+    .slice(0, 16); // Limit to a reasonable number
+
+  // Helper to extract specific technical skills
+  const getTechList = (regex) => {
+    return (
+      prof
+        .filter((s) => regex.test(s.name))
+        .map((s) => s.name)
+        .join(", ") || "—"
+    );
+  };
+
+  // Extract specific skills for the Technical Skills grid
+  const techLanguages = getTechList(
+    /(javascript|python|java|c\+\+|c#|swift|go|ruby|html|css|sql|typescript)/i
+  );
+  const techFrameworks = getTechList(
+    /(react|next|vue|angular|laravel|node|django|spring|bootstrap|tailwind)/i
+  );
+  const techTools = getTechList(
+    /(git|github|gitlab|docker|kubernetes|aws|azure|figma|vs code|jira|jenkins|mongo|mysql|postgre)/i
+  );
 
   return (
     <div className="tm-page">
       <div className="tm-card">
-        {/* header */}
+        {/* Header */}
         <header className="tm-header">
           <div className="tm-name-wrap">
-            <h1 className="tm-name">{p.fullName || "Full Name"}</h1>
-            <div className="tm-title">{p.title}</div>
+            <h1 className="tm-name">{p.fullName || "FULL NAME"}</h1>
+            <div className="tm-title">{p.title || "Job Title"}</div>
           </div>
 
-          {/* icons only (clickable) */}
+          {/* Contact Icons */}
           <div className="tm-contacts" aria-label="contact links">
             {p.whatsapp && (
               <a
                 className="tm-contact-btn"
                 href={p.whatsapp}
                 target="_blank"
-                rel="noreferrer"
+                rel="noopener noreferrer"
                 title="WhatsApp"
               >
                 <i className="bi bi-telephone-fill" />
@@ -46,7 +84,7 @@ export default function TemplateMinimal({ data }) {
                 className="tm-contact-btn"
                 href={p.linkedin}
                 target="_blank"
-                rel="noreferrer"
+                rel="noopener noreferrer"
                 title="LinkedIn"
               >
                 <i className="bi bi-linkedin" />
@@ -55,37 +93,39 @@ export default function TemplateMinimal({ data }) {
           </div>
         </header>
 
-        {/* body content centered */}
+        {/* Body Content */}
         <main className="tm-body">
           <div className="tm-body-inner">
-            {/* Education + Relevant Coursework */}
+            {/* Profile Summary (Full Width) */}
+            {p.summary && (
+              <section className="tm-section tm-summary">
+                <h3 className="tm-section-title">Profile Summary</h3>
+                <p className="tm-muted tm-summary-text">{p.summary}</p>
+              </section>
+            )}
+
+            {/* Education + Core Skills */}
             <section className="tm-section tm-two-cols">
-              <div className="tm-col">
+              <div className="tm-col tm-edu-col">
                 <h3 className="tm-section-title">Education</h3>
                 {edus.map((e, i) => (
                   <div className="tm-edu-item" key={i}>
                     <div className="tm-edu-degree">{e.degree}</div>
                     {e.institute && (
-                      <div className="tm-muted">{e.institute}</div>
+                      <div className="tm-muted tm-small">{e.institute}</div>
                     )}
                   </div>
                 ))}
               </div>
 
-              <div className="tm-col">
-                <h3 className="tm-section-title">Relevant Coursework</h3>
+              <div className="tm-col tm-coursework-col">
+                <h3 className="tm-section-title">Core Skills / Coursework</h3>
                 <ul className="tm-dot-list">
-                  {[
-                    ...(data.relevantCoursework || []),
-                    ...prof.map((s) => s.name),
-                  ]
-                    .filter(Boolean)
-                    .slice(0, 12)
-                    .map((it, idx) => (
-                      <li className="tm-chip" key={idx}>
-                        {it}
-                      </li>
-                    ))}
+                  {consolidatedSkills.map((it, idx) => (
+                    <li className="tm-chip" key={idx}>
+                      {it}
+                    </li>
+                  ))}
                 </ul>
               </div>
             </section>
@@ -94,38 +134,35 @@ export default function TemplateMinimal({ data }) {
             <section className="tm-section">
               <h3 className="tm-section-title">Experience</h3>
               {jobs.length === 0 ? (
-                <div className="tm-muted">No jobs yet</div>
+                <div className="tm-muted">No experience entries yet</div>
               ) : (
                 jobs.map((j, idx) => (
                   <div className="tm-entry" key={idx}>
                     <strong>{j.title || j.name}</strong>
                     {j.description && (
-                      <div className="tm-muted">{j.description}</div>
+                      <div className="tm-muted tm-small">{j.description}</div>
                     )}
                   </div>
                 ))
               )}
             </section>
 
-            {/* Projects (no links) */}
             {/* Projects */}
             <section className="tm-section">
               <h3 className="tm-section-title">Projects</h3>
               <div className="tm-projects-row">
                 {projects.length === 0 ? (
-                  <div className="tm-muted">No projects yet</div>
+                  <div className="tm-muted">No projects added yet</div>
                 ) : (
                   projects.map((pr, i) => (
                     <div className="tm-proj-item" key={i}>
                       <div className="tm-proj-title">
                         <strong>{pr.title}</strong>
-
-                        {/* repo link icon (shown only if repo url exists) */}
                         {pr.repo ? (
                           <a
                             href={pr.repo}
                             target="_blank"
-                            rel="noreferrer noopener"
+                            rel="noopener noreferrer"
                             className="tm-proj-link"
                             title={`Open ${pr.title} repo`}
                             aria-label={`Open ${pr.title} repo`}
@@ -134,7 +171,6 @@ export default function TemplateMinimal({ data }) {
                           </a>
                         ) : null}
                       </div>
-
                       {pr.desc && (
                         <div className="tm-muted tm-small">{pr.desc}</div>
                       )}
@@ -144,59 +180,59 @@ export default function TemplateMinimal({ data }) {
               </div>
             </section>
 
-            {/* Certifications (issuer under title, no link) */}
+            {/* Certifications & Training */}
             <section className="tm-section">
               <h3 className="tm-section-title">Training & Certifications</h3>
-              {certs.length === 0 ? (
-                <div className="tm-muted">No certificates</div>
-              ) : (
-                certs.map((c, i) => (
-                  <div className="tm-cert-item" key={i}>
-                    <div className="tm-cert-title">
-                      <strong>{c.title}</strong>
+              <div className="tm-certs-row">
+                {certs.length === 0 ? (
+                  <div className="tm-muted">No certificates added yet</div>
+                ) : (
+                  certs.map((c, i) => (
+                    <div className="tm-cert-item" key={i}>
+                      <div className="tm-cert-title">
+                        <strong>{c.title}</strong>
+                        {c.url ? (
+                          <a
+                            href={c.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="tm-proj-link"
+                            title={`View ${c.title}`}
+                            aria-label={`View ${c.title}`}
+                          >
+                            <i className="bi bi-link-45deg" />
+                          </a>
+                        ) : null}
+                      </div>
+                      {c.issuer && (
+                        <div className="tm-muted tm-small">{c.issuer}</div>
+                      )}
                     </div>
-                    {c.issuer && (
-                      <div className="tm-muted tm-small">{c.issuer}</div>
-                    )}
-                  </div>
-                ))
-              )}
+                  ))
+                )}
+              </div>
             </section>
 
-            {/* Technical Skills */}
+            {/* Technical Skills Grid (Bottom) */}
             <section className="tm-section tm-tech-box">
               <h3 className="tm-section-title">Technical Skills</h3>
               <div className="tm-tech-grid">
                 <div>
-                  <div className="tm-tech-heading">Languages</div>
-                  <div className="tm-muted tm-small">
-                    {prof
-                      .map((s) => s.name)
-                      .slice(0, 6)
-                      .join(", ") || "—"}
+                  <div className="tm-tech-heading">Languages / Databases</div>
+                  <div className="tm-muted tm-small tm-tech-list">
+                    {techLanguages || "—"}
                   </div>
                 </div>
                 <div>
-                  <div className="tm-tech-heading">Concepts</div>
-                  <div className="tm-muted tm-small">
-                    OOP, RESTful APIs, Responsive UI
+                  <div className="tm-tech-heading">Frameworks / Libraries</div>
+                  <div className="tm-muted tm-small tm-tech-list">
+                    {techFrameworks || "—"}
                   </div>
                 </div>
                 <div>
-                  <div className="tm-tech-heading">Tools</div>
-                  <div className="tm-muted tm-small">VS Code, Git, GitHub</div>
-                </div>
-                <div>
-                  <div className="tm-tech-heading">Frameworks</div>
-                  <div className="tm-muted tm-small">
-                    {prof
-                      .filter((s) =>
-                        /react|next|vue|angular|laravel|bootstrap|typescript/i.test(
-                          s.name
-                        )
-                      )
-                      .map((s) => s.name)
-                      .join(", ") || "—"}
+                  <div className="tm-tech-heading">Tools / Platforms</div>
+                  <div className="tm-muted tm-small tm-tech-list">
+                    {techTools || "—"}
                   </div>
                 </div>
               </div>

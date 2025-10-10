@@ -11,12 +11,14 @@ export default function TemplateModern({ data }) {
   const projects = data.projects || [];
   const langs = data.languages || [];
 
+  // State to trigger animations after mount
   const [mounted, setMounted] = useState(false);
   useEffect(() => {
     const t = setTimeout(() => setMounted(true), 50);
     return () => clearTimeout(t);
   }, []);
 
+  // Helper function to render skill dots
   const renderDots = (lvl = 0, dots = 10) => {
     const filled = Math.round(
       (Math.max(0, Math.min(100, Number(lvl) || 0)) / 100) * dots
@@ -31,29 +33,26 @@ export default function TemplateModern({ data }) {
 
   return (
     <div className="modern-resume">
-      <div className="modern-card">
-        {/* header */}
+      <div className={`modern-card ${mounted ? "mounted" : ""}`}>
+        {/* Header Section */}
         <div className="modern-header">
           <div className="header-top">
-            <div className="mt-4">
+            <div className="name-block">
               <h1 className="full-name">{p.fullName}</h1>
               <div className="title">{p.title}</div>
             </div>
 
-            <div className="contact">
+            <div className="contact-icons">
               {p.email && (
                 <a
                   className="contact-link"
                   href={`mailto:${p.email}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
                   title={p.email}
                   aria-label="Email"
                 >
                   <i className="bi bi-envelope-fill" />
                 </a>
               )}
-
               {p.linkedin && (
                 <a
                   className="contact-link"
@@ -66,7 +65,6 @@ export default function TemplateModern({ data }) {
                   <i className="bi bi-linkedin" />
                 </a>
               )}
-
               {p.whatsapp && (
                 <a
                   className="contact-link"
@@ -91,9 +89,9 @@ export default function TemplateModern({ data }) {
           </div>
         </div>
 
-        {/* body rows */}
+        {/* Body Section (Stacked Rows) */}
         <div className="modern-body">
-          {/* PROFILE full width */}
+          {/* 1. PROFILE full width */}
           <div className="row row-profile">
             <div className="profile-block card-block full">
               <h3>Profile</h3>
@@ -101,7 +99,7 @@ export default function TemplateModern({ data }) {
             </div>
           </div>
 
-          {/* SKILLS (left) + CERTIFICATES (right) */}
+          {/* 2. SKILLS (left) + CERTIFICATES (right) */}
           <div className="row row-skill-cert">
             <div className="col-left">
               <div className="card-block">
@@ -118,23 +116,8 @@ export default function TemplateModern({ data }) {
                           <span className="skill-name text-muted">
                             {s.name}
                           </span>
-
-                          <div
-                            style={{
-                              display: "flex",
-                              alignItems: "center",
-                              gap: 10,
-                            }}
-                          >
-                            <span
-                              className="skill-percent"
-                              aria-hidden
-                              style={{
-                                minWidth: 40,
-                                textAlign: "right",
-                                fontSize: 13,
-                              }}
-                            >
+                          <div className="skill-level-indicator">
+                            <span className="skill-percent" aria-hidden>
                               {lvl}%
                             </span>
                             <div className="dots" aria-hidden>
@@ -145,15 +128,16 @@ export default function TemplateModern({ data }) {
                       </div>
                     );
                   })}
-                  <h3>Personal Skills</h3>
-                  <ul className="simple-list">
-                    {personalSkills.map((ps, i) => (
-                      <li className="text-muted" key={i}>
-                        {ps}
-                      </li>
-                    ))}
-                  </ul>
                 </div>
+
+                <h3 style={{ marginTop: "15px" }}>Personal Skills</h3>
+                <ul className="simple-list">
+                  {personalSkills.map((ps, i) => (
+                    <li className="text-muted" key={i}>
+                      {ps}
+                    </li>
+                  ))}
+                </ul>
               </div>
             </div>
 
@@ -162,16 +146,7 @@ export default function TemplateModern({ data }) {
                 <h3>Certificates</h3>
                 <ul className="cert-list">
                   {certs.map((c, i) => (
-                    <li
-                      key={i}
-                      className="cert-item"
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "space-between",
-                        gap: 12,
-                      }}
-                    >
+                    <li key={i} className="cert-item">
                       <div>
                         <strong>{c.title}</strong>
                         <div className="muted small">{c.issuer}</div>
@@ -194,7 +169,7 @@ export default function TemplateModern({ data }) {
             </div>
           </div>
 
-          {/* EXPERIENCE + EDUCATION side-by-side (equal width) */}
+          {/* 3. EXPERIENCE + EDUCATION side-by-side (equal width) */}
           <div className="row row-exp-edu">
             <div className="col-equal">
               <div className="card-block big">
@@ -229,7 +204,7 @@ export default function TemplateModern({ data }) {
             </div>
           </div>
 
-          {/* PROJECTS (left) + LANGUAGES (right small box) */}
+          {/* 4. PROJECTS (left) + LANGUAGES (right small box) */}
           <div className="row row-projects-langs">
             <div className="projects-col">
               <div className="card-block">
@@ -239,15 +214,14 @@ export default function TemplateModern({ data }) {
                     projects.map((pr, i) => (
                       <div className="project-card" key={i}>
                         <div className="proj-title">{pr.title}</div>
-                        <div className="muted" style={{ marginTop: 6 }}>
-                          {pr.desc}
-                        </div>
+                        <div className="muted project-desc">{pr.desc}</div>
                         {pr.repo && (
                           <a
                             href={pr.repo}
                             target="_blank"
                             rel="noopener noreferrer"
                             className="repo-link"
+                            title="View Repository"
                           >
                             <i className="bi bi-github" />
                           </a>
@@ -276,6 +250,7 @@ export default function TemplateModern({ data }) {
                         <div className="lang-bar">
                           <div
                             className="lang-fill"
+                            // Animation relies on parent mounted class and transition defined in CSS
                             style={{ transform: `scaleX(${lvl / 100})` }}
                           />
                         </div>
