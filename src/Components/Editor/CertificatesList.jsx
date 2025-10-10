@@ -17,10 +17,22 @@ export default function CertificatesList({ certificates = [], onChange }) {
     onChange(certificates.filter((_, i) => i !== idx));
   }
 
-
   return (
-    <div>
-      <h4>Certificates</h4>
+    <div style={{ marginBottom: 15 }}>
+      <div
+        className="block-head"
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          marginBottom: 10,
+        }}
+      >
+        <h4 style={{ fontSize: "1.1em", margin: 0 }}>Certificates</h4>
+        <button className="btn btn-sm btn-success" onClick={addCert}>
+          + Add
+        </button>
+      </div>
       {certificates.map((c, i) => (
         <div
           key={i}
@@ -57,9 +69,8 @@ export default function CertificatesList({ certificates = [], onChange }) {
               alignItems: "center",
             }}
           >
-            
             <button
-              className="btn btn-sm"
+              className="btn btn-sm btn-danger"
               onClick={() => removeCert(i)}
               style={{ marginLeft: "auto" }}
             >
@@ -68,10 +79,6 @@ export default function CertificatesList({ certificates = [], onChange }) {
           </div>
         </div>
       ))}
-
-      <button className="btn btn-sm" onClick={addCert}>
-        Add certificate
-      </button>
     </div>
   );
 }
