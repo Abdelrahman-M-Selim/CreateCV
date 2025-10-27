@@ -6,6 +6,7 @@ import ProjectsList from "./ProjectsList";
 import EducationsList from "./EducationsList";
 import JobsList from "./JobsList";
 import CertificatesList from "./CertificatesList";
+import IntroQuestions from "./IntroQuestions"; // 1. استيراد المكون الجديد
 
 export default function Editor({
   data,
@@ -40,6 +41,14 @@ export default function Editor({
     onChange({ ...data, certificates: next });
   }
 
+  // 2. دالة تحديث جديدة لحالة visibility
+  function updateVisibility(nextVisibility) {
+    onChange({ ...data, visibility: nextVisibility });
+  }
+
+  // الحصول على حالة الإظهار/الإخفاء (visibility)
+  const visibility = data.visibility || {};
+
   const Section = ({ title, children }) => (
     <section
       className="editor-section"
@@ -58,6 +67,7 @@ export default function Editor({
       {children}
     </section>
   );
+
   return (
     <aside className="editor">
       <header
@@ -69,7 +79,7 @@ export default function Editor({
         }}
       >
         <h2 style={{ margin: 0, fontSize: "1.5em", color: "var(--text)" }}>
-           CV Creator
+          CV Creator
         </h2>
         <p
           style={{
@@ -82,7 +92,13 @@ export default function Editor({
         </p>
       </header>
 
-      {/* 1. Personal Information */}
+      <IntroQuestions
+        visibility={visibility}
+        onChangeVisibility={updateVisibility}
+      />
+
+      <hr style={{ margin: "20px 0", borderColor: "#ddd" }} />
+
       <Section title="Personal Info & Photo">
         <PersonalInfo personal={data.personal} onChange={updatePersonal} />
         <div style={{ marginTop: 15 }}>
@@ -95,7 +111,6 @@ export default function Editor({
         </div>
       </Section>
 
-      {/* 2. Skills and Languages */}
       <Section title="Skills & Languages">
         <SkillsList
           personalSkills={data.personalSkills}
@@ -107,30 +122,34 @@ export default function Editor({
         />
       </Section>
 
-      {/* 3. Experience */}
-      <Section title="Work Experience">
-        <JobsList jobs={data.jobs} onChange={updateJobs} />
-      </Section>
+      {visibility.showJobs && (
+        <Section title="Work Experience">
+          <JobsList jobs={data.jobs} onChange={updateJobs} />
+        </Section>
+      )}
 
-      {/* 4. Education and Certificates */}
-      <Section title="Education & Certificates">
+      <Section title="Education">
         <EducationsList
           educations={data.educations}
           onChange={updateEducations}
         />
-        <hr style={{ margin: "15px 0", borderColor: "#eee" }} />
-        <CertificatesList
-          certificates={data.certificates}
-          onChange={updateCertificates}
-        />
       </Section>
 
-      {/* 5. Projects */}
-      <Section title="Projects">
-        <ProjectsList projects={data.projects} onChange={updateProjects} />
-      </Section>
+      {visibility.showProjects && (
+        <Section title="Projects">
+          <ProjectsList projects={data.projects} onChange={updateProjects} />
+        </Section>
+      )}
 
-      {/* 6. Actions (Buttons) */}
+      {visibility.showCertificates && (
+        <Section title="Certificates">
+          <CertificatesList
+            certificates={data.certificates}
+            onChange={updateCertificates}
+          />
+        </Section>
+      )}
+
       <div
         style={{
           marginTop: 20,

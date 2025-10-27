@@ -4,6 +4,8 @@ export default function TemplateClassic({ data }) {
   const p = data.personal || {};
   const prof = data.profSkills || [];
 
+  const visibility = data.visibility || {};
+
   // Animation state for skill bars
   const [mounted, setMounted] = useState(false);
   useEffect(() => {
@@ -35,7 +37,7 @@ export default function TemplateClassic({ data }) {
     </section>
   );
 
-  // Helper component for Timeline Items
+  // Helper component for Timeline Items (remains unchanged)
   const TimelineItem = ({
     title,
     subtitle,
@@ -91,9 +93,9 @@ export default function TemplateClassic({ data }) {
 
   return (
     <div className="resume-card">
-      {/* --------------------- LEFT COLUMN --------------------- */}
+      {/* --------------------- LEFT COLUMN (Skills, Contact) --------------------- */}
       <div className="left-col">
-        {/* Photo & Basic Info */}
+        {/* Photo & Basic Info (Always visible) */}
         <div className="photo-wrap">
           {p.photoBase64 ? (
             <img className="photo" src={p.photoBase64} alt={p.fullName} />
@@ -110,7 +112,7 @@ export default function TemplateClassic({ data }) {
         <h2 className="name">{p.fullName}</h2>
         <p className="role">{p.title}</p>
 
-        {/* Contact Info (Moved from Right Header to Left Column for classic template style) */}
+        {/* Contact Info (Always visible) */}
         <section className="section contact-details">
           <h3>Contact</h3>
           <ul style={{ listStyle: "none", padding: 0, margin: "10px 0 0 0" }}>
@@ -158,7 +160,7 @@ export default function TemplateClassic({ data }) {
           </ul>
         </section>
 
-        {/* Personal Skills (Soft Skills) */}
+        {/* Personal Skills (Always visible) */}
         <section className="section">
           <h3>Soft Skills</h3>
           <ul className="bullets">
@@ -168,7 +170,7 @@ export default function TemplateClassic({ data }) {
           </ul>
         </section>
 
-        {/* Professional Skills (Tech Skills) */}
+        {/* Professional Skills (Always visible) */}
         <section className="section">
           <h3>Technical Skills</h3>
           {(prof || []).map((s, i) => {
@@ -205,7 +207,6 @@ export default function TemplateClassic({ data }) {
                     className="skill-fill"
                     style={{
                       height: "100%",
-                      // Use mounted state for animation
                       transform: mounted
                         ? `scaleX(${level / 100})`
                         : "scaleX(0)",
@@ -217,7 +218,7 @@ export default function TemplateClassic({ data }) {
           })}
         </section>
 
-        {/* Languages */}
+        {/* Languages (Always visible) */}
         <section className="section">
           <h3>Languages</h3>
           {(data.languages || []).map((l, i) => {
@@ -254,7 +255,6 @@ export default function TemplateClassic({ data }) {
                     className="skill-fill"
                     style={{
                       height: "100%",
-                      // Ensure animation uses the mounted state as well
                       transform: mounted ? `scaleX(${lvl / 100})` : "scaleX(0)",
                     }}
                   />
@@ -265,9 +265,9 @@ export default function TemplateClassic({ data }) {
         </section>
       </div>
 
-      {/* --------------------- RIGHT COLUMN --------------------- */}
+      {/* --------------------- RIGHT COLUMN (Experience, Edu, Projects, Certs) --------------------- */}
       <div className="right-col">
-        {/* Header - Simplified as contacts are now on the left */}
+        {/* Header (Always visible) */}
         <div
           className="header"
           style={{ padding: "25px 28px", height: "auto" }}
@@ -282,31 +282,33 @@ export default function TemplateClassic({ data }) {
           </div>
         </div>
 
-        {/* Summary */}
+        {/* Summary (Always visible) */}
         <RightSection title="Profile Summary">
           <p style={{ margin: 0, lineHeight: 1.6 }}>{p.summary}</p>
         </RightSection>
 
-        {/* Experience */}
-        <RightSection title="Work Experience">
-          <div className="timeline">
-            {(data.jobs || []).map((j, i) => (
-              <TimelineItem
-                key={i}
-                title={j.title}
-                subtitle={j.company || "Job/Internship"}
-                description={j.description}
-              />
-            ))}
-            {(data.jobs || []).length === 0 && (
-              <p className="muted" style={{ margin: "14px 0" }}>
-                No work experience added yet.
-              </p>
-            )}
-          </div>
-        </RightSection>
+        {/* Experience (Conditional) */}
+        {visibility.showJobs && (
+          <RightSection title="Work Experience">
+            <div className="timeline">
+              {(data.jobs || []).map((j, i) => (
+                <TimelineItem
+                  key={i}
+                  title={j.title}
+                  subtitle={j.company || "Job/Internship"}
+                  description={j.description}
+                />
+              ))}
+              {(data.jobs || []).length === 0 && (
+                <p className="muted" style={{ margin: "14px 0" }}>
+                  No work experience added yet.
+                </p>
+              )}
+            </div>
+          </RightSection>
+        )}
 
-        {/* Education */}
+        {/* Education (Always visible) */}
         <RightSection title="Education">
           <div className="timeline">
             {(data.educations || []).map((ed, i) => (
@@ -315,58 +317,62 @@ export default function TemplateClassic({ data }) {
           </div>
         </RightSection>
 
-        {/* Projects */}
-        <RightSection title="Key Projects" hasSeparator={false}>
-          <div className="timeline">
-            {(data.projects || []).map((pr, i) => (
-              <TimelineItem
-                key={i}
-                title={pr.title}
-                subtitle={pr.desc}
-                link={pr.repo}
-                linkIconClass="bi bi-github"
-              />
-            ))}
-          </div>
-        </RightSection>
-
-        {/* Certificates */}
-        <RightSection title="Certificates" hasSeparator={false}>
-          {(data.certificates || []).map((c, idx) => (
-            <div
-              key={idx}
-              className="item"
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: 10,
-                margin: "10px 0",
-              }}
-            >
-              <div style={{ flex: 1 }}>
-                <strong style={{ display: "block" }}>{c.title}</strong>
-                <p
-                  className="muted"
-                  style={{ margin: "3px 0 0 0", fontSize: "13px" }}
-                >
-                  {c.issuer}
-                </p>
-              </div>
-              {c.url && (
-                <a
-                  href={c.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  title="Open certificate"
-                  className="item-link"
-                  style={{ color: "var(--accent)", textDecoration: "none" }}
-                >
-                  <i className="bi bi-link-45deg" style={{ fontSize: 20 }} />
-                </a>
-              )}
+        {/* Projects (Conditional) */}
+        {visibility.showProjects && (
+          <RightSection title="Key Projects" hasSeparator={false}>
+            <div className="timeline">
+              {(data.projects || []).map((pr, i) => (
+                <TimelineItem
+                  key={i}
+                  title={pr.title}
+                  subtitle={pr.desc}
+                  link={pr.repo}
+                  linkIconClass="bi bi-github"
+                />
+              ))}
             </div>
-          ))}
-        </RightSection>
+          </RightSection>
+        )}
+
+        {/* Certificates (Conditional) */}
+        {visibility.showCertificates && (
+          <RightSection title="Certificates" hasSeparator={false}>
+            {(data.certificates || []).map((c, idx) => (
+              <div
+                key={idx}
+                className="item"
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 10,
+                  margin: "10px 0",
+                }}
+              >
+                <div style={{ flex: 1 }}>
+                  <strong style={{ display: "block" }}>{c.title}</strong>
+                  <p
+                    className="muted"
+                    style={{ margin: "3px 0 0 0", fontSize: "13px" }}
+                  >
+                    {c.issuer}
+                  </p>
+                </div>
+                {c.url && (
+                  <a
+                    href={c.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    title="Open certificate"
+                    className="item-link"
+                    style={{ color: "var(--accent)", textDecoration: "none" }}
+                  >
+                    <i className="bi bi-link-45deg" style={{ fontSize: 20 }} />
+                  </a>
+                )}
+              </div>
+            ))}
+          </RightSection>
+        )}
       </div>
     </div>
   );

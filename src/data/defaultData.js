@@ -3,22 +3,18 @@ export const DEFAULT_DATA = {
   personal: {
     fullName: "Abdelrahman Selim",
     title: "Frontend Developer",
-    // أطول مقدّمة تعرض في التمبلِيتات (Profile / Summary)
     summary:
       "Frontend developer with practical experience building responsive web apps using HTML, CSS, JavaScript and React. I write clean code, follow best practices, and I’m passionate about learning new tools and improving UX. Experienced with small e-commerce and portfolio projects; seeking opportunities to grow and collaborate.",
-    photoBase64: "", // leave empty or fill with data URL
+    photoBase64: "test.jpg", 
     whatsapp: "https://wa.me/201027602924",
     linkedin: "https://www.linkedin.com/in/abdelrahman-selim-0401a9355",
     email: "engabdo880@mail.com",
-    // optional fields that some templates might use
     location: "Zagazig, Egypt",
     website: "", // optional personal website
   },
 
-  // simple bullet personal skills
   personalSkills: ["Fast learner", "Problem solving", "Time management"],
 
-  // professional skills with percent level (0-100)
   profSkills: [
     { name: "HTML / CSS", level: 90 },
     { name: "JavaScript (ES6+)", level: 85 },
@@ -28,25 +24,21 @@ export const DEFAULT_DATA = {
     { name: "TypeScript", level: 70 },
   ],
 
-  // languages used in modern/minimal templates
   languages: [
     { name: "Arabic", level: 100 },
     { name: "English", level: 85 },
   ],
 
-  // education entries (degree + institute; you can add date fields if needed)
   educations: [
     {
       degree: "BSc Computer and Information (2023 - 2027)",
       institute: "Zagazig University",
-      // optional fields for templates that show dates/locations
       start: "2023",
       end: "2027",
       location: "Zagazig, Egypt",
     },
   ],
 
-  // jobs / experience (title + description)
   jobs: [
     {
       title: "Freelance Web Developer (2024 - Present)",
@@ -55,7 +47,6 @@ export const DEFAULT_DATA = {
     },
   ],
 
-  // projects: title, short description and repo/link (no images required)
   projects: [
     {
       title: "Rochetta – Online Pharmacy Store",
@@ -69,7 +60,6 @@ export const DEFAULT_DATA = {
     },
   ],
 
-  // certificates: title, issuer, optional url (show issuer under title in templates)
   certificates: [
     {
       title: "Web Dev Using React JS (145 hrs)",
@@ -83,7 +73,13 @@ export const DEFAULT_DATA = {
     },
   ],
 
-  // settings: template selection and schema version for future migrations
+  // --- NEW VISIBILITY SETTINGS ---
+  visibility: {
+    showJobs: true, 
+    showProjects: true,
+    showCertificates: true,
+  },
+
   settings: {
     selectedTemplate: "classic",
     schemaVersion: 1,

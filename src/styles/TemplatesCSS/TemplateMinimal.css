@@ -353,3 +353,49 @@
     border-left: none; /* Remove dashed line in print */
   }
 }
+
+
+@media print {
+  
+  * {
+    -webkit-print-color-adjust: exact !important; /* Chrome, Safari */
+    color-adjust: exact !important; /* Firefox */
+  }
+  
+  /* 2. التحكم في الهوامش والقص (Breaks) */
+  .modern-resume, .resume-card, .tm-page {
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
+    box-shadow: none !important;
+    overflow: visible !important;
+  }
+  
+  .section, .card-block, .timeline-item, .tm-entry {
+    page-break-inside: avoid !important;
+    break-after: auto !important;
+    break-before: auto !important;
+  }
+
+  .left-col, .right-col, .row {
+    display: block !important;
+    width: 100% !important;
+    height: auto !important;
+    min-height: 0 !important;
+  }
+
+  .left-col {
+      background: #f0f0f0 !important;
+      color: #000 !important;
+  }
+  
+  .editor, .preview-toolbar, .contact-icons {
+    display: none !important;
+  }
+ 
+  .right-col .section {
+    padding: 10px 0 !important;
+    margin-bottom: 15px !important;
+    border-bottom: 1px solid #ccc !important;
+  }
+}
