@@ -1,0 +1,505 @@
+/* --- Global Variables (Theme) --- */
+:root {
+  --bg-page: #f1f3f6;
+  --card-bg: #ffffff;
+  --card-radius: 10px;
+  --header-bg: #111217; /* Stronger contrast */
+  --muted: #6b7280;
+  --accent-start: #4caf50;
+  --accent-end: #50af32;
+  --soft: #fafafa;
+  --text: #111827;
+  --shadow-1: 0 12px 30px rgba(16, 24, 40, 0.06);
+  --shadow-2: 0 6px 12px rgba(16, 24, 40, 0.04);
+  --gap: 16px;
+  --card-padding: 18px; /* Increased padding slightly */
+  --photo-size: 140px;
+}
+
+/* Page Wrapper */
+.modern-resume {
+  padding: 28px;
+  background: var(--bg-page);
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+}
+
+/* Main Card */
+.modern-card {
+  width: 920px;
+  background: var(--card-bg);
+  border-radius: var(--card-radius);
+  overflow: visible;
+  box-shadow: var(--shadow-1);
+  position: relative;
+  box-sizing: border-box;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+  color: var(--text);
+}
+
+/* --- Header Section --- */
+.modern-header {
+  height: 200px;
+  background: var(--header-bg);
+  color: #fff;
+  overflow: visible;
+  padding: 36px 28px 56px 28px;
+  position: relative;
+  border-top-left-radius: var(--card-radius);
+  border-top-right-radius: var(--card-radius);
+}
+
+/* Header Layout */
+.header-top {
+  height: 90%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+/* Name and Title block */
+.name-block {
+    margin-top: 10px; /* Aligns content better */
+}
+.full-name {
+  margin: 0;
+  font-size: 28px;
+  letter-spacing: 0.6px;
+  text-align: right;
+  font-weight: 700;
+}
+.title {
+  margin-top: 6px;
+  font-size: 15px;
+  opacity: 0.94;
+  text-align: right;
+}
+
+/* Contact Icons */
+.contact-icons {
+  display: flex;
+  gap: 12px; /* Increased gap for icons */
+  align-items: center;
+}
+.contact-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.08); /* Slightly stronger background */
+  color: inherit;
+  text-decoration: none;
+  transition: transform 0.12s ease, box-shadow 0.12s ease, background 0.12s ease;
+}
+.contact-link i {
+  font-size: 18px;
+  line-height: 1;
+}
+.contact-link:hover, .contact-link:focus {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 24px rgba(16, 24, 40, 0.12);
+  background: rgba(255, 255, 255, 0.15);
+  outline: none;
+}
+
+/* Photo Circle */
+.photo-circle {
+  width: var(--photo-size);
+  height: var(--photo-size);
+  border-radius: 50%;
+  border: 4px solid var(--card-bg); /* Border is based on card color */
+  box-shadow: 0 8px 20px rgba(16, 24, 40, 0.12); /* Slightly stronger shadow */
+  position: absolute;
+  left: 42%;
+  bottom: calc(-1 * var(--photo-size) / 2);
+  z-index: 5;
+  overflow: hidden;
+  background: linear-gradient(180deg, #fff, #f8fafc);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.photo-circle img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.photo-placeholder {
+    width: 100%;
+    height: 100%;
+    background: #ddd;
+}
+
+/* --- Body Section (Rows and Columns) --- */
+.modern-body {
+  display: flex;
+  flex-direction: column;
+  gap: 20px; /* Increased gap between major rows */
+  padding: calc(var(--photo-size) / 2 + 30px) 28px 28px; /* Leave room for photo and add padding */
+  box-sizing: border-box;
+}
+
+/* Common Card Block */
+.card-block {
+  background: var(--soft);
+  border-radius: 8px;
+  padding: var(--card-padding);
+  box-shadow: var(--shadow-2);
+}
+.card-block h3 {
+  margin: 0 0 10px 0;
+  font-size: 15px;
+  color: var(--text);
+  border-bottom: 2px solid var(--soft); /* Subtle separator for title */
+  padding-bottom: 5px;
+  font-weight: 700;
+}
+.muted {
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+/* Row Helpers */
+.row {
+  display: flex;
+  gap: var(--gap);
+  width: 100%;
+  box-sizing: border-box;
+  flex-wrap: nowrap;
+  align-items: stretch; /* Stretch columns to match height */
+}
+.row-profile .full {
+  width: 100%;
+}
+
+/* SKILLS + CERTIFICATES Layout */
+.row-skill-cert { align-items: stretch; }
+.col-left {
+  flex: 0 0 60%; /* Slightly adjusted proportions */
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 0;
+}
+.col-right {
+  flex: 0 0 40%;
+  min-width: 0;
+}
+
+/* Skills (Dots) */
+.skill-list .skill-row { margin-bottom: 10px; }
+.skill-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 13px;
+  color: var(--text);
+  margin-bottom: 3px;
+}
+.skill-level-indicator {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.skill-name {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 60%;
+}
+.skill-percent {
+    min-width: 40px;
+    text-align: right;
+    font-size: 13px;
+    color: var(--muted);
+}
+.dots {
+  display: flex;
+  gap: 5px; /* Tighter gap */
+  align-items: center;
+  justify-content: flex-end;
+}
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.08);
+  display: inline-block;
+  transition: background 0.45s, transform 0.45s;
+  transform: scale(1);
+}
+.dot-filled {
+  background: linear-gradient(90deg, var(--accent-start), var(--accent-end));
+  transform: scale(1.1); /* Slightly larger filled dot */
+  box-shadow: 0 2px 5px rgba(76, 175, 80, 0.2);
+}
+
+/* Personal Skills List */
+.simple-list {
+  margin: 0;
+  padding-inline-start: 16px;
+}
+.simple-list li {
+  margin-bottom: 6px;
+  font-size: 13px;
+}
+
+/* Certificates */
+.cert-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.cert-item {
+  margin-bottom: 12px; /* Increased margin */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.cert-item strong {
+    font-size: 14px;
+    display: block;
+}
+.social-icon {
+    color: var(--muted);
+    font-size: 1.4em;
+    transition: color 0.2s;
+}
+.social-icon:hover {
+    color: var(--accent-start);
+}
+
+/* EXPERIENCE + EDUCATION equal columns */
+.row-exp-edu { align-items: stretch; }
+.col-equal { flex: 1; min-width: 0; }
+.card-block.big {
+    height: 100%; /* Ensures equal height in row-exp-edu */
+}
+
+/* Entries (Exp/Edu) */
+.entry { margin-bottom: 12px; }
+.entry-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 4px;
+}
+.entry strong {
+    font-size: 15px;
+    display: block;
+}
+
+/* PROJECTS + LANGUAGES row */
+.row-projects-langs { align-items: flex-start; }
+.projects-col { flex: 1 1 auto; min-width: 0; }
+.langs-col { flex: 0 0 280px; min-width: 200px; } /* Slightly narrower for languages */
+
+/* Projects Row Internal */
+.projects-row {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.project-card {
+  background: var(--card-bg);
+  border: 1px solid #e0e0e0; /* Lighter border */
+  padding: 10px;
+  border-radius: 8px;
+  width: calc(50% - 6px);
+  box-sizing: border-box;
+  margin-bottom: 8px;
+  position: relative;
+}
+.proj-title {
+    font-weight: 600;
+    font-size: 14px;
+}
+.project-desc {
+    margin-top: 4px !important;
+}
+.repo-link {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  display: inline-flex;
+  text-decoration: none;
+  color: var(--muted);
+  font-size: 1.2em;
+}
+
+/* Languages Visuals */
+.lang-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px; /* Increased gap */
+}
+.lang-item {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.lang-name {
+  width: 100px;
+  font-size: 13px;
+  color: var(--text);
+  text-align: right;
+}
+.lang-bar {
+  flex: 1;
+  height: 6px; /* Slightly thinner bar */
+  background: #eee;
+  border-radius: 999px;
+  overflow: hidden;
+}
+.lang-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent-start), var(--accent-end));
+  transform-origin: left;
+  transform: scaleX(0);
+  transition: transform 0.9s cubic-bezier(0.2, 0.9, 0.2, 1);
+}
+.modern-card.mounted .lang-fill {
+    transform: scaleX(1); /* Trigger animation on mount */
+}
+
+
+/* --- Responsive Adjustments --- */
+@media (max-width: 900px) {
+  .modern-card {
+    width: 100%;
+  }
+  .photo-circle {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  .row {
+    flex-direction: column;
+    gap: 12px;
+  }
+  .col-left, .col-right, .col-equal, .projects-col, .langs-col {
+    flex: none;
+    width: 100%;
+  }
+  .projects-row {
+    display: flex; /* Kept flex for side-by-side on tablet/smaller screens if possible */
+  }
+  .project-card {
+    width: calc(50% - 6px); /* Still two per row on mobile landscape/tablet */
+  }
+}
+
+@media (max-width: 600px) {
+    /* Stack projects vertically on small phones */
+    .projects-row {
+        display: block;
+    }
+    .project-card {
+        width: 100%;
+    }
+    .contact-icons {
+        flex-direction: column;
+        gap: 8px;
+        align-items: flex-end;
+    }
+    .full-name {
+        font-size: 24px;
+    }
+}
+
+
+/* --- Print Rules --- */
+@media print {
+  .modern-resume {
+    padding: 0;
+    background: transparent;
+  }
+  .modern-card {
+    width: 100%;
+    box-shadow: none;
+    border-radius: 0;
+  }
+  .modern-header {
+      height: 120px; /* Reduce header height for print */
+      padding-bottom: 20px;
+  }
+  .photo-circle {
+    display: none;
+  }
+  .modern-body {
+      padding-top: 30px;
+  }
+  .card-block {
+    background: transparent;
+    box-shadow: none;
+    border: none;
+    padding: 0;
+  }
+  .dot {
+      background: #ccc; /* Ensure dots are visible */
+  }
+  .dot-filled {
+      background: #000; /* Ensure filled dots are dark */
+      box-shadow: none;
+  }
+  .contact-link {
+    display: none; /* Hide interactive icons in print */
+  }
+}
+
+/*
+  ======================================================
+  PRINT OPTIMIZATION RULES (for PDF export/printing)
+  ======================================================
+*/
+@media print {
+  
+  * {
+    -webkit-print-color-adjust: exact !important; /* Chrome, Safari */
+    color-adjust: exact !important; /* Firefox */
+  }
+  
+  /* 2. التحكم في الهوامش والقص (Breaks) */
+  .modern-resume, .resume-card, .tm-page {
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
+    box-shadow: none !important;
+    overflow: visible !important;
+  }
+  
+  .section, .card-block, .timeline-item, .tm-entry {
+    page-break-inside: avoid !important;
+    break-after: auto !important;
+    break-before: auto !important;
+  }
+
+  .left-col, .right-col, .row {
+    display: block !important;
+    width: 100% !important;
+    height: auto !important;
+    min-height: 0 !important;
+  }
+
+  .left-col {
+      background: #f0f0f0 !important;
+      color: #000 !important;
+  }
+  
+  .editor, .preview-toolbar, .contact-icons {
+    display: none !important;
+  }
+ 
+  .right-col .section {
+    padding: 10px 0 !important;
+    margin-bottom: 15px !important;
+    border-bottom: 1px solid #ccc !important;
+  }
+}

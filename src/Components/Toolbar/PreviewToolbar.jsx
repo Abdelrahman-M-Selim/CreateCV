@@ -1,12 +1,24 @@
 import React from "react";
-import { generateExportHtml, downloadHtmlFile, downloadJsonFile, copyTextToClipboard, downloadPdfFromNode } from "../../utils/export";
+import {
+  generateExportHtml,
+  downloadHtmlFile,
+  downloadJsonFile,
+  copyTextToClipboard,
+  downloadPdfFromNode,
+} from "../../utils/export";
 
 export default function PreviewToolbar({ previewRef, data }) {
+  // Handlers (remain the same)
   async function onDownloadPdf() {
     if (!previewRef.current) return;
     try {
-      await downloadPdfFromNode(previewRef.current, `${(data.personal.fullName||"cv").replace(/\s+/g,"_")}.pdf`);
-    } catch { alert("PDF export failed. Check console."); }
+      await downloadPdfFromNode(
+        previewRef.current,
+        `${(data.personal.fullName || "cv").replace(/\s+/g, "_")}.pdf`
+      );
+    } catch {
+      alert("PDF export failed. Check console.");
+    }
   }
 
   function onExportHtml() {
@@ -18,7 +30,9 @@ export default function PreviewToolbar({ previewRef, data }) {
   function onCopyHtml() {
     const inner = previewRef.current ? previewRef.current.innerHTML : "";
     const html = generateExportHtml(inner, data.personal.fullName);
-    copyTextToClipboard(html).then(ok=> alert(ok ? "HTML copied" : "Copy failed"));
+    copyTextToClipboard(html).then((ok) =>
+      alert(ok ? "HTML copied" : "Copy failed")
+    );
   }
 
   function onExportJson() {
@@ -27,11 +41,35 @@ export default function PreviewToolbar({ previewRef, data }) {
 
   return (
     <div className="preview-toolbar">
-      <div>
-        <button className="btn" onClick={onDownloadPdf}>Download PDF</button>
-        <button className="btn" onClick={onExportHtml}>Export HTML</button>
-        <button className="btn" onClick={onCopyHtml}>Copy HTML</button>
-        <button className="btn" onClick={onExportJson}>Export JSON</button>
+      <h3 className="toolbar-title">Export & Actions</h3>
+      <div className="toolbar-actions">
+        {/* Group 1: Output/Export */}
+        <div className="action-group">
+          <button className="btn btn-primary" onClick={onDownloadPdf}>
+            <i className="bi bi-file-pdf-fill" style={{ marginRight: 6 }} />{" "}
+            Download PDF
+          </button>
+
+          <button className="btn btn-secondary" onClick={onExportHtml}>
+            <i
+              className="bi bi-file-earmark-code-fill"
+              style={{ marginRight: 6 }}
+            />{" "}
+            Export HTML
+          </button>
+
+          <button className="btn btn-secondary" onClick={onCopyHtml}>
+            <i className="bi bi-clipboard-fill" style={{ marginRight: 6 }} />{" "}
+            Copy HTML
+          </button>
+        </div>
+
+        <div className="action-group">
+          <button className="btn btn-secondary" onClick={onExportJson}>
+            <i className="bi bi-filetype-json" style={{ marginRight: 6 }} />{" "}
+            Export JSON
+          </button>
+        </div>
       </div>
     </div>
   );
