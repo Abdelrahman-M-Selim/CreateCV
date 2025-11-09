@@ -28,25 +28,25 @@ export default function TemplateMinimal({ data }) {
     .slice(0, 16);
 
   // Helper to extract specific technical skills (remains unchanged)
-  const getTechList = (regex) => {
-    return (
-      prof
-        .filter((s) => regex.test(s.name))
-        .map((s) => s.name)
-        .join(", ") || "—"
-    );
-  };
+  // const getTechList = (regex) => {
+  //   return (
+  //     prof
+  //       .filter((s) => regex.test(s.name))
+  //       .map((s) => s.name)
+  //       .join(", ") || "—"
+  //   );
+  // };
 
-  // Extract specific skills for the Technical Skills grid (remains unchanged)
-  const techLanguages = getTechList(
-    /(javascript|python|java|c\+\+|c#|swift|go|ruby|html|css|sql|typescript)/i
-  );
-  const techFrameworks = getTechList(
-    /(react|next|vue|angular|laravel|node|django|spring|bootstrap|tailwind)/i
-  );
-  const techTools = getTechList(
-    /(git|github|gitlab|docker|kubernetes|aws|azure|figma|vs code|jira|jenkins|mongo|mysql|postgre)/i
-  );
+  // // Extract specific skills for the Technical Skills grid (remains unchanged)
+  // const techLanguages = getTechList(
+  //   /(javascript|python|java|c\+\+|c#|swift|go|ruby|html|css|sql|typescript)/i
+  // );
+  // const techFrameworks = getTechList(
+  //   /(react|next|vue|angular|laravel|node|django|spring|bootstrap|tailwind)/i
+  // );
+  // const techTools = getTechList(
+  //   /(git|github|gitlab|docker|kubernetes|aws|azure|figma|vs code|jira|jenkins|mongo|mysql|postgre)/i
+  // );
 
   return (
     <div className="tm-page">
@@ -221,7 +221,7 @@ export default function TemplateMinimal({ data }) {
             )}
 
             {/* Technical Skills Grid (Bottom - Always visible as it uses static content and profSkills) */}
-            <section className="tm-section tm-tech-box">
+            {/* <section className="tm-section tm-tech-box">
               <h3 className="tm-section-title">Technical Skills</h3>
               <div className="tm-tech-grid">
                 <div>
@@ -243,7 +243,7 @@ export default function TemplateMinimal({ data }) {
                   </div>
                 </div>
               </div>
-            </section>
+            </section> */}
           </div>
         </main>
       </div>
